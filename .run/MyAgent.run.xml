@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MyAgent" type="NodeJSConfigurationType" node-parameters="--import tsx --enable-source-maps" path-to-js-file="src/index.ts" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>

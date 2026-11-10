@@ -35,6 +35,19 @@ npm start
 
 项目尚未包含业务测试。GitHub Actions 会在推送和拉取请求时执行依赖安装、类型检查、构建和入口运行检查。
 
+## WebStorm 运行与调试
+
+项目的 `.run/` 目录包含可共享的运行配置，在右上角配置菜单中选择：
+
+- `MyAgent`：直接运行 TypeScript 入口；点击 Run 运行，或在 `src/index.ts` 设置断点后点击 Debug 调试。
+- `Dev (watch)`：开发监听模式，修改源码后自动重启。
+- `Build`：编译项目。
+- `Type check`：执行类型检查。
+
+`MyAgent` 通过 `--import tsx --enable-source-maps` 加载 TypeScript，无需提前构建。所有配置使用项目的 Node.js 解释器。首次使用请先执行 `npm ci`，并确认 WebStorm 的 JavaScript Runtime 设置指向 Node.js 24 或更新版本。
+
+共享运行配置不包含 API 密钥等本地环境变量；需要时在本地配置中填写。
+
 ## 目录
 
 ```text
