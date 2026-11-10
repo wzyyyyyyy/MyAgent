@@ -1,0 +1,29 @@
+{
+  "name": "myagent",
+  "version": "1.0.0",
+  "description": "Node.js and TypeScript foundation for MyAgent",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "check": "tsc --noEmit",
+    "build": "tsc",
+    "start": "node --enable-source-maps dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wzyyyyyyy/MyAgent.git"
+  }
+}
