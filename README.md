@@ -33,7 +33,7 @@ npm start
 | `npm run build` | 将源码编译到 `dist/` |
 | `npm start` | 运行已构建的 `dist/index.js` |
 
-项目尚未包含业务测试。GitHub Actions 会在推送和拉取请求时执行依赖安装、类型检查、构建和入口运行检查。
+项目尚未包含业务测试。GitHub Actions 会在 Windows、macOS 和 Linux 上，分别使用 Node.js 24 和 26 执行依赖安装、类型检查、构建、TypeScript 入口和构建产物运行检查。
 
 ## WebStorm 运行与调试
 
@@ -47,6 +47,21 @@ npm start
 `MyAgent` 通过 `--import tsx --enable-source-maps` 加载 TypeScript，无需提前构建。所有配置使用项目的 Node.js 解释器。首次使用请先执行 `npm ci`，并确认 WebStorm 的 JavaScript Runtime 设置指向 Node.js 24 或更新版本。
 
 共享运行配置不包含 API 密钥等本地环境变量；需要时在本地配置中填写。
+
+### 在新机器上使用
+
+```bash
+git clone https://github.com/wzyyyyyyy/MyAgent.git
+cd MyAgent
+npm ci
+npm run check
+npm run build
+npm start
+```
+
+使用 WebStorm 打开克隆后的目录，确认项目的 Node.js 解释器指向本机已安装的 Node.js，再选择 `MyAgent` 运行或调试。共享配置使用项目目录和项目解释器，不绑定作者电脑的路径、操作系统或全局安装的 TypeScript/tsx。
+
+需要本机已安装 Git、Node.js 24 或更新版本及 npm，并能访问 npm 公共仓库。请在每台机器上执行 `npm ci` 安装匹配当前系统的依赖，不要复制其他机器的 `node_modules/`。如后续代码依赖 API 密钥，需要单独设置本地环境变量。
 
 ## 目录
 
