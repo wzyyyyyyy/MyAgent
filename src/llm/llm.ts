@@ -1,16 +1,19 @@
 import OpenAI from "openai";
-import type {ResonseStreamParams} from "openai/resources/responses"
+import type {ResponseStreamParams} from "openai/lib/responses/ResponseStream";
 
 export class LLM {
-    private client = new OpenAI();
+    private client;
     constructor(
         private readonly baseUrl: string,
         private readonly apikey: string,
-        ) {}
-
-    public generate(params: ResonseStreamParams) {
-        return this.client.responses.stream(params);
+        ) {
+        this.client = new OpenAI({
+            baseURL: baseUrl,
+            apiKey: apikey,
+        })
     }
 
-
+    public generateStream(params: ResponseStreamParams) {
+        return this.client.responses.stream(params);
+    }
 }
