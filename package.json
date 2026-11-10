@@ -4,10 +4,10 @@
   "description": "Node.js and TypeScript foundation for MyAgent",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "node --env-file-if-exists=.env --watch --import tsx src/index.ts",
     "check": "tsc --noEmit",
     "build": "tsc",
-    "start": "node --enable-source-maps dist/index.js"
+    "start": "node --env-file-if-exists=.env --enable-source-maps dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/node": "^24.19.2",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3"
   },
   "private": true,
   "engines": {
@@ -25,5 +25,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wzyyyyyyy/MyAgent.git"
+  },
+  "dependencies": {
+    "openai": "^7.54.0",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0"
   }
 }

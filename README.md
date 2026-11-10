@@ -24,11 +24,24 @@ npm run build
 npm start
 ```
 
+## 环境变量
+
+将项目根目录的 `.env.example` 复制为 `.env`，填写自己的密钥：
+
+```dotenv
+OPENAI_BASE_URL=https://api.deepseek.com
+OPENAI_API_KEY=your_api_key_here
+```
+
+`OPENAI_BASE_URL` 是 API 基础地址，`OPENAI_API_KEY` 是服务商密钥。使用 OpenAI 官方 API 时可以省略 `OPENAI_BASE_URL`。
+
+WebStorm 的 `MyAgent` 配置、`npm run dev` 和 `npm start` 会自动加载根目录的 `.env`。系统或运行配置中已设置的同名环境变量优先于 `.env`。`.env` 已被 Git 忽略；仅提交不含真实密钥的 `.env.example`。
+
 ## 常用命令
 
 | 命令 | 用途 |
 | --- | --- |
-| `npm run dev` | 使用 tsx 监听并运行 TypeScript 入口 |
+| `npm run dev` | 加载本地环境变量，使用 Node.js 和 tsx 监听并运行入口 |
 | `npm run check` | 执行严格类型检查，不生成文件 |
 | `npm run build` | 将源码编译到 `dist/` |
 | `npm start` | 运行已构建的 `dist/index.js` |
@@ -44,9 +57,9 @@ npm start
 - `Build`：编译项目。
 - `Type check`：执行类型检查。
 
-`MyAgent` 通过 `--import tsx --enable-source-maps` 加载 TypeScript，无需提前构建。所有配置使用项目的 Node.js 解释器。首次使用请先执行 `npm ci`，并确认 WebStorm 的 JavaScript Runtime 设置指向 Node.js 24 或更新版本。
+`MyAgent` 通过 `--import tsx --enable-source-maps` 加载 TypeScript，并通过 `--env-file-if-exists=.env` 加载本地配置，无需提前构建。所有配置使用项目的 Node.js 解释器。首次使用请先执行 `npm ci`，并确认 WebStorm 的 JavaScript Runtime 设置指向 Node.js 24 或更新版本。
 
-共享运行配置不包含 API 密钥等本地环境变量；需要时在本地配置中填写。
+共享运行配置不包含 API 密钥等本地环境变量；在本地 `.env` 中填写即可。
 
 ### 在新机器上使用
 
