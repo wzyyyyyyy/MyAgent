@@ -7,7 +7,7 @@ export class WriteFileTool extends Tool<{
     content:string;
     encoding: BufferEncoding;
 }> {
-    readonly tool: FunctionTool = {
+    readonly definition: FunctionTool = {
         description: "写文件",
         name: "write_file",
         parameters: {
@@ -76,7 +76,7 @@ export class WriteFileTool extends Tool<{
         };
     }
 
-    async exec(args: {
+    protected async exec(args: {
         path:string;
         content:string;
         encoding: BufferEncoding;

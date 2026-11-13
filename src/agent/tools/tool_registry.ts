@@ -1,11 +1,11 @@
 import type {Tool} from "./tool.js";
 import type {ResponseFunctionToolCall, ResponseInputItem} from "openai/resources/responses/responses";
 
-export class ToolRegister{
+export class ToolRegistry{
     private readonly tools = new Map<string, Tool<unknown>>();
 
     public register(tool: Tool<unknown>): void {
-        const name = tool.tool.name;
+        const name = tool.definition.name;
 
         if (!name.trim()) {
             throw new Error("工具名称不能为空");
@@ -44,6 +44,6 @@ export class ToolRegister{
     }
 
     public definitions(){
-        return [...this.tools.values()].map((tool) => tool.tool);
+        return [...this.tools.values()].map((tool) => tool.definition);
     }
 }

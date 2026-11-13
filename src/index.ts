@@ -3,8 +3,8 @@ import {container, instanceCachingFactory} from "tsyringe";
 import {Agent} from "./agent/agent.js"
 import {LLM} from "./llm/llm.js";
 import {startCli} from "./cli/app.js";
-import {ToolRegister} from "./agent/tools/register.js";
-import {ToolClasses} from "./agent/tools/builtin.js";
+import {ToolRegistry} from "./agent/tools/tool_registry.js";
+import {toolClasses} from "./agent/tools/builtin.js";
 
 async function main() {
     const baseURL = process.env.OPENAI_BASE_URL;
@@ -22,7 +22,7 @@ async function main() {
     });
 
     container.register(Agent, {
-        useFactory: (c) => new Agent(c.resolve(LLM), model, c.resolve(ToolRegister)),
+        useFactory: (c) => new Agent(c.resolve(LLM), model, c.resolve(ToolRegistry)),
     });
 
     registerTools();
@@ -32,15 +32,15 @@ async function main() {
 }
 
 function registerTools() {
-    for (const ToolClass of ToolClasses) {
+    for (const ToolClass of toolClasses) {
         container.registerSingleton(ToolClass);
     }
 
-    container.register(ToolRegister, {
+    container.register(ToolRegistry, {
         useFactory: (c) => {
-            const registry = new ToolRegister();
+            const registry = new ToolRegistry();
 
-            for (const ToolClass of ToolClasses) {
+            for (const ToolClass of toolClasses) {
                 registry.register(c.resolve(ToolClass));
             }
 

@@ -6,7 +6,7 @@ import type {FunctionTool} from "openai/resources/responses/responses";
 const execFileAsync = promisify(execFile);
 
 export class BashTool extends Tool<{cmd:string}>{
-    readonly tool: FunctionTool = {
+    readonly definition: FunctionTool = {
         description: "在项目当前工作目录中执行 Bash 命令，返回标准输出、标准错误和退出码。",
         name: "bash",
         parameters: {
@@ -37,7 +37,7 @@ export class BashTool extends Tool<{cmd:string}>{
         return { cmd: args.cmd };
     }
 
-    async exec(args: { cmd: string }): Promise<string> {
+    protected async exec(args: { cmd: string }): Promise<string> {
         try {
             const { stdout, stderr } = await execFileAsync(
                 "/bin/bash",

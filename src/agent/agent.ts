@@ -1,7 +1,7 @@
 import type {LLM} from "../llm/llm.js";
 import type {ResponseInput, ResponseStreamEvent} from "openai/resources/responses/responses";
 import {toResponseInputItems} from "openai/lib/responses/ResponseInputItems";
-import type {ToolRegister} from "./tools/register.js";
+import type {ToolRegistry} from "./tools/tool_registry.js";
 
 export class Agent {
     private history: ResponseInput = [];
@@ -9,7 +9,7 @@ export class Agent {
     constructor(
         private readonly llm:LLM,
         private readonly model:string,
-        private readonly tools:ToolRegister,
+        private readonly tools:ToolRegistry,
     ) {}
 
     public async *run(prompt:string){
@@ -22,9 +22,9 @@ export class Agent {
 
     private async* runLoop(
         input: ResponseInput,
-        maxStep: number,
+        maxSteps: number,
     ): AsyncGenerator<ResponseStreamEvent, ResponseInput, void> {
-        for (let i = 0;i < maxStep;i++){
+        for (let i = 0;i < maxSteps;i++){
             const stream = this.llm.generateStream({
                 model: this.model,
                 instructions: "you are a helpful assistant",
@@ -32,8 +32,8 @@ export class Agent {
                 tools: this.tools.definitions(),
             });
             try {
-                for await (const item of stream) {
-                    yield item;
+                for await (const event of stream) {
+                    yield event;
                 }
 
                 const response = await stream.finalResponse();
@@ -54,9 +54,9 @@ export class Agent {
                     return input;
                 }
 
-                for (const x1 of
+                for (const call of
                     calls) {
-                    const result = await this.tools.execute(x1);
+                    const result = await this.tools.execute(call);
                     input.push(result);
                 }
 
@@ -68,6 +68,6 @@ export class Agent {
             }
         }
 
-        throw new Error(`Agent 已达到最大执行轮数：${maxStep}`);
+        throw new Error(`Agent 已达到最大执行轮数：${maxSteps}`);
     }
 }

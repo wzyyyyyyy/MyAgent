@@ -6,7 +6,7 @@ export class ReadFileTool extends Tool<{
     path:string;
     encoding: BufferEncoding;
 }> {
-    readonly tool: FunctionTool = {
+    readonly definition: FunctionTool = {
         description: "读取文件",
         name: "read_file",
         parameters: {
@@ -57,7 +57,7 @@ export class ReadFileTool extends Tool<{
         };
     }
 
-    async exec(args: { path: string; encoding: BufferEncoding; }): Promise<string> {
+    protected async exec(args: { path: string; encoding: BufferEncoding; }): Promise<string> {
         try {
             let content = await readFile(args.path, args.encoding);
 
