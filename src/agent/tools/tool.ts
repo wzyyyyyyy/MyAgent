@@ -1,5 +1,4 @@
 import type {FunctionTool} from "openai/resources/responses/responses";
-
 export abstract class Tool<TArgs> {
     abstract readonly tool: FunctionTool;
 
